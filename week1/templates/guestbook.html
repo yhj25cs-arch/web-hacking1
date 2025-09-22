@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>방명록</title>
+</head>
+<body>
+    <h1>방명록</h1>
+    <form action="/write" method="post">
+        <input type="text" name="name" placeholder="이름을 입력하세요" required>
+        <input type="text" name="message" placeholder="방명록을 작성하세요" required>
+        <button type="submit">제출</button>
+    </form>
+    
+    <hr>
+    <!-- 수평선 -->
+    
+    {% if entries %}
+        <h2>방명록 목록</h2>
+        {% for name, message in entries %}
+            <p><strong>{{ name }}</strong>: {{ message }}</p>
+        {% endfor %}
+    {% else %}
+        <p>아직 작성된 방명록이 없습니다.</p>
+    {% endif %}
+    
+    <hr>
+    
+    <h3>검색</h3>
+    <form action="/search" method="get">
+        <input type="text" name="query" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+    {% if query is defined %}
+        <h4>검색 결과: "{{ query }}"</h4>
+        {% if results %}
+            {% for name, message in results %}
+                <p><strong>{{ name }}</strong>: {{ message }}</p>
+            {% endfor %}
+        {% else %}
+            <p>검색 결과가 없습니다.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
